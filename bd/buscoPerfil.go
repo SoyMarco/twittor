@@ -12,11 +12,12 @@ import (
 
 /*BuscoPerfil busca un perfil en la BD*/
 func BuscoPerfil(ID string) (models.Usuario, error) {
+	//ESTAS 4 SIEMPRE
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 	defer cancel()
-
-	db := MongoCN.Database("Twittor")
+	db := MongoCN.Database("twittor")
 	col := db.Collection("usuarios")
+
 	var perfil models.Usuario
 	objID, _ := primitive.ObjectIDFromHex(ID)
 
