@@ -16,7 +16,7 @@ func LeoTweetsSeguidores(ID string, pagina int) ([]models.DevuelvoTweetsSeguidor
 	db := MongoCN.Database("twittor")
 	col := db.Collection("relacion")
 
-	skip := (pagina - 1) * 20
+	skip := (pagina - 1) * 10
 	condiciones := make([]bson.M, 0)
 	//$match busca el usuario id
 	//$lookup Une 2 tablas
@@ -34,9 +34,9 @@ func LeoTweetsSeguidores(ID string, pagina int) ([]models.DevuelvoTweetsSeguidor
 	condiciones = append(condiciones, bson.M{"$unwind": "$tweet"})
 	//condiciona que ordene por fecha
 	condiciones = append(condiciones, bson.M{"$sort": bson.M{"tweet.fecha": -1}})
-	//primero skip y luego limit para delimitar solo mostrar 20 tweets por vez
+	//primero skip y luego limit para delimitar solo mostrar 10 tweets por vez
 	condiciones = append(condiciones, bson.M{"$skip": skip})
-	condiciones = append(condiciones, bson.M{"$limit": 20})
+	condiciones = append(condiciones, bson.M{"$limit": 10})
 
 	//Aggregate recorre automaticamente
 	cursor, err := col.Aggregate(ctx, condiciones)

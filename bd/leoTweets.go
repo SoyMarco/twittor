@@ -24,11 +24,11 @@ func LeoTweets(ID string, pagina int64) ([]*models.DevuelvoTweets, bool) {
 	}
 	//cuando son muchas opciones conviene usar el /bson/options
 	opciones := options.Find()
-	opciones.SetLimit(20)
+	opciones.SetLimit(10)
 	//Acomoda los tweeets por fecha de forma descendente por el -1
 	opciones.SetSort(bson.D{{Key: "fecha", Value: -1}})
 	//Para que cada pagina salte 20 multiplicado por la pagina
-	opciones.SetSkip((pagina - 1) * 20)
+	opciones.SetSkip((pagina - 1) * 10)
 
 	cursor, err := col.Find(ctx, condicion, opciones)
 	if err != nil {
